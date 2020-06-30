@@ -1,0 +1,47 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "gradle.plugin.com.vraiment.gradle:jni:0.2.2"
+    }
+}
+
+plugins {
+    id 'java'
+}
+
+
+apply plugin: "com.vraiment.gradle.jni"
+
+
+
+
+
+group 'br.com.johnathan'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    mavenLocal()
+    mavenCentral()
+
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation "com.badlogicgames.gdx:gdx:1.9.10"
+
+
+
+}
+
+generateJni {
+    jdk = file('C:/Program Files/Java/jdk1.8.0_251')
+    classpath = files("$buildDir/classes/java/main/")
+    generatedHeadersDir = file("C:/Users/Johnathan/Effekseerlib/api/src/mainjava/particles")
+    classes = [ 'particles.EffekseerCoreJNI' ]
+}

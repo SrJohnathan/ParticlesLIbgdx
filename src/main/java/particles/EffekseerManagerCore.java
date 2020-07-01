@@ -8,85 +8,81 @@
 
 package particles;
 
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.math.Matrix4;
 
 class EffekseerManagerCore {
-  public transient long swigCPtr;
-  protected transient boolean swigCMemOwn;
+    public transient long swigCPtr;
+    protected transient boolean swigCMemOwn;
 
-  protected EffekseerManagerCore(long cPtr, boolean cMemoryOwn) {
-    swigCMemOwn = cMemoryOwn;
-    swigCPtr = cPtr;
-  }
-
-  protected static long getCPtr(EffekseerManagerCore obj) {
-    return (obj == null) ? 0 : obj.swigCPtr;
-  }
-
-  @SuppressWarnings("deprecation")
-  protected void finalize() {
-    delete();
-  }
-
-  public synchronized void delete() {
-    if (swigCPtr != 0) {
-      if (swigCMemOwn) {
-        swigCMemOwn = false;
-        EffekseerCoreJNI.delete_EffekseerManagerCore(swigCPtr);
-      }
-      swigCPtr = 0;
+    protected EffekseerManagerCore(long cPtr, boolean cMemoryOwn) {
+        swigCMemOwn = cMemoryOwn;
+        swigCPtr = cPtr;
     }
-  }
 
-  public EffekseerManagerCore() {
-    this(EffekseerCoreJNI.new_EffekseerManagerCore(), true);
-  }
+    protected static long getCPtr(EffekseerManagerCore obj) {
+        return (obj == null) ? 0 : obj.swigCPtr;
+    }
 
-  public boolean Initialize(int spriteMaxCount,  EffekseerCore.TypeOpenGL typeOpenGL) {
-    return EffekseerCoreJNI.EffekseerManagerCore_Initialize(swigCPtr, this, spriteMaxCount,typeOpenGL.getId());
-  }
+    @SuppressWarnings("deprecation")
+    protected void finalize() {
+        delete();
+    }
 
-  public void Update(float deltaFrames) {
-    EffekseerCoreJNI.EffekseerManagerCore_Update(swigCPtr, this, deltaFrames);
-  }
+    public synchronized void delete() {
+        if (swigCPtr != 0) {
+            if (swigCMemOwn) {
+                swigCMemOwn = false;
+                EffekseerCoreJNI.delete_EffekseerManagerCore(swigCPtr);
+            }
+            swigCPtr = 0;
+        }
+    }
 
-  public int Play(EffekseerEffectCore effect) {
-    return EffekseerCoreJNI.EffekseerManagerCore_Play(swigCPtr, this, EffekseerEffectCore.getCPtr(effect), effect);
-  }
+    public EffekseerManagerCore() {
+        this(EffekseerCoreJNI.new_EffekseerManagerCore(), true);
+    }
 
-  public void SetEffectPosition(int handle, float x, float y, float z) {
-    EffekseerCoreJNI.EffekseerManagerCore_SetEffectPosition(swigCPtr, this, handle, x, y, z);
-  }
+    public boolean Initialize(int spriteMaxCount, EffekseerCore.TypeOpenGL typeOpenGL) {
+        return EffekseerCoreJNI.EffekseerManagerCore_Initialize(swigCPtr, this, spriteMaxCount, typeOpenGL.getId());
+    }
 
-  public void DrawBack() {
-    EffekseerCoreJNI.EffekseerManagerCore_DrawBack(swigCPtr, this);
-  }
+    public void Update(float deltaFrames) {
+        EffekseerCoreJNI.EffekseerManagerCore_Update(swigCPtr, this, deltaFrames);
+    }
 
-  public void DrawFront() {
-    EffekseerCoreJNI.EffekseerManagerCore_DrawFront(swigCPtr, this);
-  }
+    public int Play(EffekseerEffectCore effect) {
+        return EffekseerCoreJNI.EffekseerManagerCore_Play(swigCPtr, this, EffekseerEffectCore.getCPtr(effect), effect);
+    }
 
-  public void SetViewProjectionMatrixWithSimpleWindowOrthogonal(int windowWidth, int windowHeight) {
-    EffekseerCoreJNI.EffekseerManagerCore_SetViewProjectionMatrixWithSimpleWindowOrthogonal(swigCPtr, this, windowWidth, windowHeight);
-  }
+    public void SetEffectPosition(int handle, float x, float y, float z) {
+        EffekseerCoreJNI.EffekseerManagerCore_SetEffectPosition(swigCPtr, this, handle, x, y, z);
+    }
 
-  public void SetViewProjectionMatrixWithSimpleWindowPerspective(float windowWidth, float windowHeight, PerspectiveCamera perspectiveCamera) {
+    public void DrawBack() {
+        EffekseerCoreJNI.EffekseerManagerCore_DrawBack(swigCPtr, this);
+    }
 
-      float at[] = {  };
-      float up [] = { perspectiveCamera.up.x,perspectiveCamera.up.y,perspectiveCamera.up.z };
+    public void DrawFront() {
+        EffekseerCoreJNI.EffekseerManagerCore_DrawFront(swigCPtr, this);
+    }
 
-    EffekseerCoreJNI.EffekseerManagerCore_SetViewProjectionMatrixWithSimpleWindowPerspective(swigCPtr, this, windowWidth, windowHeight,up,perspectiveCamera.near,perspectiveCamera.far);
-  }
+    public void pause(int handle) {
+         EffekseerCoreJNI.EffekseerManagerCore_Pause(swigCPtr, this,  handle);
+    }
 
-  public  void SetCameraRotate( float x, float y, float z){
-    EffekseerCoreJNI.EffekseerManagerCore_SetCameraRotate(swigCPtr,this,x,y,z);
+    public void resume(int handle) {
+         EffekseerCoreJNI.EffekseerManagerCore_Resume(swigCPtr, this,  handle);
+    }
 
-  }
+    public void setProjectionMatrix(Matrix4 matrix4, Matrix4 matrix4c,boolean view3D, float wiht, float heit) {
+        EffekseerCoreJNI.EffekseerManagerCore_SetProjectionMatrix(swigCPtr, this, matrix4.getValues(), matrix4c.getValues(),view3D,wiht,heit);
+    }
 
-  public  void SetCameraPosition( float x, float y, float z){
-    EffekseerCoreJNI.EffekseerManagerCore_SetCameraPosition(swigCPtr,this,  x , y,z);
 
-  }
+
+    public boolean isPlaying(int handle) {
+      return   EffekseerCoreJNI.EffekseerManagerCore_Isplaying(swigCPtr, this,  handle);
+
+    }
 
 }

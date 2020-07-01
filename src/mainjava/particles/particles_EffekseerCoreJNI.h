@@ -210,50 +210,26 @@ JNIEXPORT void JNICALL Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1Upd
 /*
  * Class:     particles_EffekseerCoreJNI
  * Method:    EffekseerManagerCore_Pause
- * Signature: (JLparticles/EffekseerManagerCore;IZ)V
+ * Signature: (JLparticles/EffekseerManagerCore;I)V
  */
 JNIEXPORT void JNICALL Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1Pause
-  (JNIEnv *, jclass, jlong, jobject, jint, jboolean);
+  (JNIEnv *, jclass, jlong, jobject, jint);
 
 /*
  * Class:     particles_EffekseerCoreJNI
- * Method:    EffekseerManagerCore_SetCameraPosition
- * Signature: (JLparticles/EffekseerManagerCore;FFF)V
+ * Method:    EffekseerManagerCore_Resume
+ * Signature: (JLparticles/EffekseerManagerCore;I)V
  */
-JNIEXPORT void JNICALL Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1SetCameraPosition
-  (JNIEnv *, jclass, jlong, jobject, jfloat, jfloat, jfloat);
+JNIEXPORT void JNICALL Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1Resume
+  (JNIEnv *, jclass, jlong, jobject, jint);
 
 /*
  * Class:     particles_EffekseerCoreJNI
- * Method:    EffekseerManagerCore_SetCameraRotate
- * Signature: (JLparticles/EffekseerManagerCore;FFF)V
+ * Method:    EffekseerManagerCore_Isplaying
+ * Signature: (JLparticles/EffekseerManagerCore;I)Z
  */
-JNIEXPORT void JNICALL Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1SetCameraRotate
-  (JNIEnv *, jclass, jlong, jobject, jfloat, jfloat, jfloat);
-
-/*
- * Class:     particles_EffekseerCoreJNI
- * Method:    EffekseerManagerCore_Camera_combined_3D
- * Signature: (JLparticles/EffekseerManagerCore;[F[F)V
- */
-JNIEXPORT void JNICALL Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1Camera_1combined_13D
-  (JNIEnv *, jclass, jlong, jobject, jfloatArray, jfloatArray);
-
-/*
- * Class:     particles_EffekseerCoreJNI
- * Method:    EffekseerManagerCore_Play
- * Signature: (JLparticles/EffekseerManagerCore;JLparticles/EffekseerEffectCore;)I
- */
-JNIEXPORT jint JNICALL Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1Play
-  (JNIEnv *, jclass, jlong, jobject, jlong, jobject);
-
-/*
- * Class:     particles_EffekseerCoreJNI
- * Method:    EffekseerManagerCore_SetEffectPosition
- * Signature: (JLparticles/EffekseerManagerCore;IFFF)V
- */
-JNIEXPORT void JNICALL Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1SetEffectPosition
-  (JNIEnv *, jclass, jlong, jobject, jint, jfloat, jfloat, jfloat);
+JNIEXPORT jboolean JNICALL Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1Isplaying
+  (JNIEnv *, jclass, jlong, jobject, jint);
 
 /*
  * Class:     particles_EffekseerCoreJNI
@@ -273,19 +249,27 @@ JNIEXPORT void JNICALL Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1Dra
 
 /*
  * Class:     particles_EffekseerCoreJNI
- * Method:    EffekseerManagerCore_SetViewProjectionMatrixWithSimpleWindowOrthogonal
- * Signature: (JLparticles/EffekseerManagerCore;II)V
+ * Method:    EffekseerManagerCore_SetProjectionMatrix
+ * Signature: (JLparticles/EffekseerManagerCore;[F[F)V
  */
-JNIEXPORT void JNICALL Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1SetViewProjectionMatrixWithSimpleWindowOrthogonal
-  (JNIEnv *, jclass, jlong, jobject, jint, jint);
+JNIEXPORT void JNICALL Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1SetProjectionMatrix
+  (JNIEnv *, jclass, jlong, jobject, jfloatArray, jfloatArray);
 
 /*
  * Class:     particles_EffekseerCoreJNI
- * Method:    EffekseerManagerCore_SetViewProjectionMatrixWithSimpleWindowPerspective
- * Signature: (JLparticles/EffekseerManagerCore;FF[FFF)V
+ * Method:    EffekseerManagerCore_Play
+ * Signature: (JLparticles/EffekseerManagerCore;JLparticles/EffekseerEffectCore;)I
  */
-JNIEXPORT void JNICALL Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1SetViewProjectionMatrixWithSimpleWindowPerspective
-  (JNIEnv *, jclass, jlong, jobject, jfloat, jfloat, jfloatArray, jfloat, jfloat);
+JNIEXPORT jint JNICALL Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1Play
+  (JNIEnv *, jclass, jlong, jobject, jlong, jobject);
+
+/*
+ * Class:     particles_EffekseerCoreJNI
+ * Method:    EffekseerManagerCore_SetEffectPosition
+ * Signature: (JLparticles/EffekseerManagerCore;IFFF)V
+ */
+JNIEXPORT void JNICALL Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1SetEffectPosition
+  (JNIEnv *, jclass, jlong, jobject, jint, jfloat, jfloat, jfloat);
 
 #ifdef __cplusplus
 }

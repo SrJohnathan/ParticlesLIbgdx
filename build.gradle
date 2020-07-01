@@ -11,6 +11,8 @@ buildscript {
 
 plugins {
     id 'java'
+    id 'java-library'
+    id 'maven-publish'
 }
 
 
@@ -21,7 +23,7 @@ apply plugin: "com.vraiment.gradle.jni"
 
 
 group 'br.com.johnathan'
-version '1.0-SNAPSHOT'
+version '0.0.1'
 
 repositories {
     mavenCentral()
@@ -39,9 +41,44 @@ dependencies {
 
 }
 
+
+jar {
+    manifest {
+        attributes('Implementation-Title': project.name,
+                'Implementation-Version': project.version)
+    }
+}
+
+
 generateJni {
     jdk = file('C:/Program Files/Java/jdk1.8.0_251')
     classpath = files("$buildDir/classes/java/main/")
     generatedHeadersDir = file("C:/Users/Johnathan/Effekseerlib/api/src/mainjava/particles")
     classes = [ 'particles.EffekseerCoreJNI' ]
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            pom {
+                name = 'GDX-Effekseer'
+                description = 'Dedicated library for using Effekseer particle tools in libGDX'
+
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'johnathan'
+                        name = 'Antonio Johnathan'
+                        email = 'johnathan.stark42@gmail.com'
+                    }
+                }
+
+            }
+        }
+    }
 }

@@ -33,7 +33,7 @@ libs
     x86
         libsrc.so
 
-Wondows Folder
+Windows Folder
         assets
             src.dll
 

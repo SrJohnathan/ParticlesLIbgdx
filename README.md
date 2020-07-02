@@ -44,6 +44,7 @@ Windows Folder
 ### Core dependencies
 ```implementation 'br.com.johnathan.gdx.effekseer:api:0.0.3'```
 
+sourceCompatibility = 1.8
 ### Starting
 
 #### 3D Effects  perspectiveCamera

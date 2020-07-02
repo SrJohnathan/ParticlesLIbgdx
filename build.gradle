@@ -42,7 +42,7 @@ def vers = '0.0.3'
 group 'br.com.johnathan.gdx.effekseer'
 version = vers
 archivesBaseName = 'gdx.effekseer'
-sourceCompatibility = 1.7
+sourceCompatibility = 1.8
 
 
 repositories {

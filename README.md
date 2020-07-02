@@ -7,6 +7,7 @@
 Dedicated library for using Effekseer particle tools in libGDX
 
 https://effekseer.github.io/en/
+
 https://libgdx.badlogicgames.com/
 
 ### Core dependencies

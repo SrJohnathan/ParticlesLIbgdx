@@ -1,7 +1,7 @@
 # LibGDX + Effekseer
 
 
-![Bintray](https://img.shields.io/bintray/v/srjohnathan/gdx.effekseer/gdx.effekseer)
+[![Bintray](https://img.shields.io/bintray/v/srjohnathan/gdx.effekseer/gdx.effekseer)](https://bintray.com/srjohnathan/gdx.effekseer/gdx.effekseer)
 
 
 Dedicated library for using Effekseer particle tools in libGDX

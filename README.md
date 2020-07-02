@@ -7,7 +7,7 @@
 Dedicated library for using Effekseer particle tools in libGDX
 
 
-![Alt text](imgs\giggg.gif?raw=true "Title")
+![Alt text](https://thumbs.gfycat.com/ThickDistinctDunnart-size_restricted.gif?raw=true "Title")
 
 https://effekseer.github.io/en/
 

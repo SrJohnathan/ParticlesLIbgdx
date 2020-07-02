@@ -13,6 +13,34 @@ https://effekseer.github.io/en/
 
 https://libgdx.badlogicgames.com/
 
+
+### Native dependencies
+
+You must download the native libraries
+
+[download libs native](libs.zip)
+
+
+```
+
+Android Folder
+
+libs 
+    arm64-v8a
+        libsrc.so
+    armeabi-v7a
+        libsrc.so
+    x86
+        libsrc.so
+
+Wondows Folder
+        assets
+            src.dll
+
+```
+
+
+
 ### Core dependencies
 ```implementation 'br.com.johnathan.gdx.effekseer:api:0.0.1```
 

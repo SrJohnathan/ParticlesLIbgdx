@@ -181,7 +181,7 @@ bintray {
     pkg {
         repo = 'gdx.effekseer'
         name = 'gdx.effekseer'
-        userOrg = 'antoniojohnathan'
+        userOrg = 'srjohnathan'
         vcsUrl = 'https://github.com/SrJohnathan/ParticlesLIbgdx.git'
         licenses = ['The Apache License, Version 2.0']
         version {

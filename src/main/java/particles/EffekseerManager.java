@@ -73,9 +73,9 @@ public class EffekseerManager implements Disposable {
         Gdx.gl.glCullFace(GL20.GL_BACK);
 
 
-        effekseers.forEach(effekseer -> {
+        for (ParticleEffekseer effekseer : effekseers){
             if(effekseer.isPlay()){
-             if(!effekseerManagerCore.isPlaying(effekseer.getHandle())){
+                if(!effekseerManagerCore.isPlaying(effekseer.getHandle())){
                     effekseer.setPlay(false);
                     if( effekseer.getOnAnimationComplete() != null){
                         effekseer.getOnAnimationComplete().finish();
@@ -84,7 +84,9 @@ public class EffekseerManager implements Disposable {
 
                 }
             }
-        });
+        }
+
+
 
 
             if(camera instanceof OrthographicCamera){

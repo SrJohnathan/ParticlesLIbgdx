@@ -37,10 +37,12 @@ apply plugin: 'maven'
 apply plugin: 'io.codearte.nexus-staging'
 apply plugin: "maven-publish"
 
-group 'br.com.johnathan.gdx.effekseer'
-version '0.0.1'
-archivesBaseName = 'gdx.effekseer'
+def vers = '0.0.3'
 
+group 'br.com.johnathan.gdx.effekseer'
+version = vers
+archivesBaseName = 'gdx.effekseer'
+sourceCompatibility = 1.7
 
 
 repositories {
@@ -185,7 +187,7 @@ bintray {
         vcsUrl = 'https://github.com/SrJohnathan/ParticlesLIbgdx.git'
         licenses = ['The Apache License, Version 2.0']
         version {
-            name = '0.0.1'
+            name = vers
         }
     }
 }

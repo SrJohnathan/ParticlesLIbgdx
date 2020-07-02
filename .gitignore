@@ -1,2 +1,5 @@
 /build/
 /.gradle/
+/gradle.properties
+/secring.gpg
+/secret.gpg

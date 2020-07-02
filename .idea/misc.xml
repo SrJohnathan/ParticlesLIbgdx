@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FilterState">
+    <option name="selectedSeverities">
+      <map>
+        <entry key="High" value="true" />
+        <entry key="Medium" value="true" />
+        <entry key="Low" value="true" />
+        <entry key="Information" value="true" />
+        <entry key="Unknown" value="true" />
+        <entry key="Pending" value="true" />
+        <entry key="Normal" value="true" />
+      </map>
+    </option>
+    <option name="selectedLicences">
+      <map />
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>

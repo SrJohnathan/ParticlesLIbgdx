@@ -3,27 +3,45 @@ buildscript {
         maven {
             url "https://plugins.gradle.org/m2/"
         }
+        mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath "gradle.plugin.com.vraiment.gradle:jni:0.2.2"
+        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.5.3"
+        classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
     }
 }
 
+
+//
 plugins {
     id 'java'
     id 'java-library'
-    id 'maven-publish'
+    id 'signing'
+    id "com.jfrog.bintray" version "1.8.5"
+
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven {
+        url "https://plugins.gradle.org/m2/"
+    }
 }
 
 
 apply plugin: "com.vraiment.gradle.jni"
+apply plugin: 'maven'
+apply plugin: 'io.codearte.nexus-staging'
+apply plugin: "maven-publish"
 
-
-
-
-
-group 'br.com.johnathan'
+group 'br.com.johnathan.gdx.effekseer'
 version '0.0.1'
+archivesBaseName = 'gdx.effekseer'
+
+
 
 repositories {
     mavenCentral()
@@ -38,8 +56,9 @@ dependencies {
     implementation "com.badlogicgames.gdx:gdx:1.9.10"
 
 
-
 }
+
+
 
 
 jar {
@@ -49,21 +68,88 @@ jar {
     }
 }
 
-
 generateJni {
     jdk = file('C:/Program Files/Java/jdk1.8.0_251')
     classpath = files("$buildDir/classes/java/main/")
     generatedHeadersDir = file("C:/Users/Johnathan/Effekseerlib/api/src/mainjava/particles")
-    classes = [ 'particles.EffekseerCoreJNI' ]
+    classes = ['particles.EffekseerCoreJNI']
 }
+
+
+
+
+tasks.register("sourcesJar", Jar) {
+    from sourceSets.main.allJava
+    classifier "sources"
+}
+
+tasks.register("javadocJar", Jar) {
+    from javadoc
+    classifier "javadoc"
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+
+            pom.project {
+                name "gdx.effekseer"
+                packaging 'jar'
+                description 'Dedicated library for using Effekseer particle tools in libGDX'
+                url = 'https://github.com/SrJohnathan/ParticlesLIbgdx'
+
+                scm {
+                    connection  'scm:git:git://github.com/SrJohnathan/ParticlesLIbgdx.git'
+                    developerConnection  'scm:git:git://github.com/SrJohnathan/ParticlesLIbgdx.git'
+                    url  'https://github.com/SrJohnathan/ParticlesLIbgdx'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'johnathanaj'
+                        name = 'Antonio Johnathan'
+                        email = 'johnathan.stark42@gmail.com'
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
             pom {
-                name = 'GDX-Effekseer'
+                name = "gdx.effekseer"
                 description = 'Dedicated library for using Effekseer particle tools in libGDX'
-
+                url = 'https://github.com/SrJohnathan/ParticlesLIbgdx'
                 licenses {
                     license {
                         name = 'The Apache License, Version 2.0'
@@ -72,13 +158,40 @@ publishing {
                 }
                 developers {
                     developer {
-                        id = 'johnathan'
+                        id = 'johnathanaj'
                         name = 'Antonio Johnathan'
                         email = 'johnathan.stark42@gmail.com'
                     }
                 }
-
+                scm {
+                    connection =  'scm:git:git://github.com/SrJohnathan/ParticlesLIbgdx.git'
+                    developerConnection =  'scm:git:git://github.com/SrJohnathan/ParticlesLIbgdx.git'
+                    url = 'https://github.com/SrJohnathan/ParticlesLIbgdx'
+                }
             }
         }
     }
+}
+
+
+bintray {
+    user = project.hasProperty('bintrayUser') ? project.getProperty('bintrayUser') : System.getenv('BINTRAY_USER')
+    key = project.hasProperty('bintrayApiKey') ? project.getProperty('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+    publications = ['mavenJava']
+    pkg {
+        repo = 'gdx.effekseer'
+        name = 'gdx.effekseer'
+        userOrg = 'antoniojohnathan'
+        vcsUrl = 'https://github.com/SrJohnathan/ParticlesLIbgdx.git'
+        licenses = ['The Apache License, Version 2.0']
+        version {
+            name = '0.0.1'
+        }
+    }
+}
+
+
+nexusStaging {
+    username = ossrhUsername
+    password = ossrhPassword
 }

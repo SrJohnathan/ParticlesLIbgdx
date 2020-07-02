@@ -42,7 +42,7 @@ Windows Folder
 
 
 ### Core dependencies
-```implementation 'br.com.johnathan.gdx.effekseer:api:0.0.3'```
+```implementation 'br.com.johnathan.gdx.effekseer:api:0.0.1'```
 
 sourceCompatibility = 1.8
 ### Starting

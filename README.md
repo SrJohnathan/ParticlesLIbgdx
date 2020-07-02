@@ -68,7 +68,8 @@ manager.dispose();
   EffekseerManager  manager = new EffekseerManager(orthographicCamera);
 ```
 
-### Core dependencies
+### Supported platforms
+
 Android 
 
 Windows

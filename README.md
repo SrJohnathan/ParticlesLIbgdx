@@ -49,7 +49,7 @@ sourceCompatibility = 1.8
 
 #### 3D Effects  perspectiveCamera
 
-```
+```java
 // Effekseer start
 EffekseerManager.InitializeEffekseer();
 
@@ -77,7 +77,7 @@ EffekseerManager.InitializeEffekseer();
 
 #### Render function
 
-``` 
+``` java
 @Override
         public void render() {
 
@@ -87,7 +87,7 @@ EffekseerManager.InitializeEffekseer();
 
 #### dispose function
 
-```  
+```java  
 @Override
     public void dispose() {
 manager.dispose();
@@ -95,7 +95,7 @@ manager.dispose();
 ```
 
 #### 2D Effects  orthographicCamera
-```
+```java
   OrthographicCamera  orthographicCamera = new OrthographicCamera(1280f,720f);
   EffekseerManager  manager = new EffekseerManager(orthographicCamera);
 ```

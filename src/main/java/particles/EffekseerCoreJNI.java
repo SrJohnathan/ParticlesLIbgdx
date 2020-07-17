@@ -78,7 +78,9 @@ import java.io.IOException;
 
     public final static native void EffekseerManagerCore_SetEffectPosition(long jarg1, EffekseerManagerCore jarg1_, int jarg2, float jarg3, float jarg4, float jarg5);
 
+    public final static native void EffekseerManagerCore_SetEffectRotate(long jarg1, EffekseerManagerCore jarg1_, int jarg2, float jarg3, float jarg4, float jarg5);
 
+    public final static native void EffekseerManagerCore_SetEffectScale(long jarg1, EffekseerManagerCore jarg1_, int jarg2, float jarg3, float jarg4, float jarg5);
 
 
  }

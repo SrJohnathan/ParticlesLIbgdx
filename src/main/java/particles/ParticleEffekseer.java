@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.math.Vector3;
 
 import java.io.File;
 
@@ -16,19 +17,20 @@ public class ParticleEffekseer {
     private int handle;
     private boolean play;
     private float magnification = 1.0f;
-    private float X= 0f, Y = 0f, Z = 0f;
+    private Vector3 position,rotate,scale;
+
 
 
     public ParticleEffekseer(EffekseerManager manager) {
         this.manager = manager;
         this.manager.addParticleEffekseer(this);
         effekseerEffectCore = new EffekseerEffectCore();
+
     }
 
     public void setMagnification(float magnification) {
         this.magnification = magnification;
     }
-
 
     public boolean isPlay() {
         return play;
@@ -43,19 +45,31 @@ public class ParticleEffekseer {
     }
 
 
-    public void setLacation(float x, float y, float z) {
+    public void setRotate(Vector3 rotate) {
+        this.rotate = rotate;
+        manager.effekseerManagerCore.SetEffectRotate(handle, this.rotate.x, this.rotate.y, this.rotate.z);
+    }
 
-        X = x;
-        Y = y;
-        Z = z;
+    public Vector3 getScale() {
+        return scale;
+    }
 
+    public void setScale(Vector3 scale) {
+        this.scale = scale;
+        manager.effekseerManagerCore.SetEffectScale(handle, this.scale.x, this.scale.y, this.scale.z);
+
+    }
+
+    public void setPosition(Vector3 position) {
+
+        this.position = position;
 
         if(manager.camera instanceof PerspectiveCamera){
-            manager.effekseerManagerCore.SetEffectPosition(handle, x, y, z);
+            manager.effekseerManagerCore.SetEffectPosition(handle, this.position.x, this.position.y, this.position.z);
         }
 
         if(manager.camera instanceof OrthographicCamera){
-            manager.effekseerManagerCore.SetEffectPosition(handle, (-(manager.camera.viewportWidth /2) +X), (-(manager.camera.viewportHeight  /2) +Y), 0);
+            manager.effekseerManagerCore.SetEffectPosition(handle, (-(manager.camera.viewportWidth /2) +this.position.x), (-(manager.camera.viewportHeight  /2) +this.position.y), 0);
 
 
         }
@@ -69,7 +83,21 @@ public class ParticleEffekseer {
     public void play() {
         play = true;
         handle = manager.effekseerManagerCore.Play(effekseerEffectCore);
-        setLacation(X,Y,Z);
+
+        if(position == null){
+            setPosition(new Vector3());
+        }else {
+            setPosition(position);
+        }
+
+        if(rotate != null){
+            setRotate(rotate);
+        }
+
+        if(scale != null){
+            setScale(scale);
+        }
+
     }
 
 
@@ -185,30 +213,13 @@ public class ParticleEffekseer {
 
     }
 
-    public void setX(float x) {
-        X = x;
+    public Vector3 getPosition() {
+        return position;
     }
 
-    public void setY(float y) {
-        Y = y;
+    public Vector3 getRotate() {
+        return rotate;
     }
-
-    public void setZ(float z) {
-        Z = z;
-    }
-
-    public float getX() {
-        return X;
-    }
-
-    public float getY() {
-        return Y;
-    }
-
-    public float getZ() {
-        return Z;
-    }
-
 
     public void  pause(){
         manager.effekseerManagerCore.pause(handle);

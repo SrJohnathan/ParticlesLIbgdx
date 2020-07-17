@@ -58,6 +58,14 @@ class EffekseerManagerCore {
         EffekseerCoreJNI.EffekseerManagerCore_SetEffectPosition(swigCPtr, this, handle, x, y, z);
     }
 
+    public void SetEffectRotate(int handle, float x, float y, float z) {
+        EffekseerCoreJNI.EffekseerManagerCore_SetEffectRotate(swigCPtr, this, handle, x, y, z);
+    }
+
+    public void SetEffectScale(int handle, float x, float y, float z) {
+        EffekseerCoreJNI.EffekseerManagerCore_SetEffectScale(swigCPtr, this, handle, x, y, z);
+    }
+
     public void DrawBack() {
         EffekseerCoreJNI.EffekseerManagerCore_DrawBack(swigCPtr, this);
     }

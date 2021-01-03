@@ -37,9 +37,9 @@ apply plugin: 'maven'
 apply plugin: 'io.codearte.nexus-staging'
 apply plugin: "maven-publish"
 
-def vers = '0.0.3'
+def vers = '0.0.5'
 
-group 'br.com.johnathan.gdx.effekseer'
+group 'br.com.johnathan.gdx.effekseer.api'
 version = vers
 archivesBaseName = 'gdx.effekseer'
 sourceCompatibility = 1.8
@@ -55,7 +55,7 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    implementation "com.badlogicgames.gdx:gdx:1.9.10"
+    implementation "com.badlogicgames.gdx:gdx:1.9.11"
 
 
 }
@@ -74,7 +74,7 @@ generateJni {
     jdk = file('C:/Program Files/Java/jdk1.8.0_251')
     classpath = files("$buildDir/classes/java/main/")
     generatedHeadersDir = file("C:/Users/Johnathan/Effekseerlib/api/src/mainjava/particles")
-    classes = ['particles.EffekseerCoreJNI']
+    classes = ['particles.EffekseerCoreJNI','particles.EffekseerNodeJNI']
 }
 
 
@@ -192,6 +192,16 @@ bintray {
     }
 }
 
+
+def coreWrapperDir=new File("${projectDir}/src/main/java/br/com/johnathan/gdx/effekseer/api")
+task createCoreWrapperDir{
+    coreWrapperDir.mkdirs()
+}
+//Call SWIG to wrap your C/C++ code to a JAVA code
+task runSwig(type:Exec, dependsOn:['createCoreWrapperDir']){
+    commandLine 'swig'
+    args '-c++', '-java', '-package', 'br.com.johnathan.gdx.effekseer.api', '-outdir', coreWrapperDir.absolutePath, '-o',"F:/Gdx-Effekseer/src/dll.cpp", "${projectDir}/src/main/jni/st.i"
+}
 
 nexusStaging {
     username = ossrhUsername

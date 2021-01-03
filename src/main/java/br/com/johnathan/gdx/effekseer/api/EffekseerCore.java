@@ -1,6 +1,6 @@
 
 
-package particles;
+package br.com.johnathan.gdx.effekseer.api;
 
 public class EffekseerCore {
 

@@ -1,4 +1,4 @@
-package particles;
+package br.com.johnathan.gdx.effekseer.api;
 
 public interface OnAnimationComplete {
 

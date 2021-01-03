@@ -1,32 +1,53 @@
-package particles;
+package br.com.johnathan.gdx.effekseer.api;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
+
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Quaternion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class ParticleEffekseer {
 
-    private EffekseerManager manager;
+    private final Matrix4 transform = new Matrix4();
+
     private final EffekseerEffectCore effekseerEffectCore;
+    private int nodeSize = 0;
+    // private ArrayList<EffekseerNode> nodes;
+
+    private final float[] mtx = new float[12];
+    private EffekseerManager manager;
     private OnAnimationComplete onAnimationComplete;
     private int handle;
     private boolean play;
     private float magnification = 1.0f;
-    private Vector3 position,rotate,scale;
+    private float scale = 1f;
+
+
+    private boolean getmatrix = false;
 
 
 
-    public ParticleEffekseer(EffekseerManager manager) {
-        this.manager = manager;
+
+
+    public ParticleEffekseer(  EffekseerManager manager) {
+
+
+
+        this.manager = Objects.requireNonNull(manager);
         this.manager.addParticleEffekseer(this);
         effekseerEffectCore = new EffekseerEffectCore();
+        // nodes = new ArrayList<>();
 
     }
+
 
     public void setMagnification(float magnification) {
         this.magnification = magnification;
@@ -38,6 +59,12 @@ public class ParticleEffekseer {
 
     protected void setPlay(boolean play) {
         this.play = play;
+
+     /*  if (nodes.size() > 0) {
+            nodes.forEach(effekseerNode -> {
+                effekseerNode.setPlay(play);
+            });
+        }     */
     }
 
     protected void delete() {
@@ -45,34 +72,52 @@ public class ParticleEffekseer {
     }
 
 
-    public void setRotate(Vector3 rotate) {
-        this.rotate = rotate;
-        manager.effekseerManagerCore.SetEffectRotate(handle, this.rotate.x, this.rotate.y, this.rotate.z);
-    }
+   /* public ArrayList<EffekseerNode> getNodes() {
+        return nodes;
+    }  */
 
-    public Vector3 getScale() {
+    public float getScale() {
         return scale;
     }
 
-    public void setScale(Vector3 scale) {
+    public void setScale(float scale) {
         this.scale = scale;
-        manager.effekseerManagerCore.SetEffectScale(handle, this.scale.x, this.scale.y, this.scale.z);
+        manager.effekseerManagerCore.SetEffectScale(handle, scale, scale, scale);
 
     }
 
-    public void setPosition(Vector3 position) {
+    protected void setMatrix4() {
 
-        this.position = position;
 
-        if(manager.camera instanceof PerspectiveCamera){
-            manager.effekseerManagerCore.SetEffectPosition(handle, this.position.x, this.position.y, this.position.z);
+        if (getmatrix) {
+
+
+            transform.extract4x3Matrix(mtx);
+            manager.effekseerManagerCore.SetMatrix(handle, mtx);
         }
+    }
 
-        if(manager.camera instanceof OrthographicCamera){
-            manager.effekseerManagerCore.SetEffectPosition(handle, (-(manager.camera.viewportWidth /2) +this.position.x), (-(manager.camera.viewportHeight  /2) +this.position.y), 0);
+    private void getmatrix() {
 
 
-        }
+        float[] dst = manager.effekseerManagerCore.GetMatrix(handle);
+
+
+        transform.val[Matrix4.M00] = dst[0];
+        transform.val[Matrix4.M10] = dst[1];
+        transform.val[Matrix4.M20] = dst[2];
+        transform.val[Matrix4.M01] = dst[3];
+        transform.val[Matrix4.M11] = dst[4];
+        transform.val[Matrix4.M21] = dst[5];
+        transform.val[Matrix4.M02] = dst[6];
+        transform.val[Matrix4.M12] = dst[7];
+        transform.val[Matrix4.M22] = dst[8];
+        transform.val[Matrix4.M03] = dst[9];
+        transform.val[Matrix4.M13] = dst[10];
+        transform.val[Matrix4.M23] = dst[11];
+
+        getmatrix = true;
+
 
     }
 
@@ -84,22 +129,43 @@ public class ParticleEffekseer {
         play = true;
         handle = manager.effekseerManagerCore.Play(effekseerEffectCore);
 
-        if(position == null){
-            setPosition(new Vector3());
-        }else {
-            setPosition(position);
-        }
 
-        if(rotate != null){
-            setRotate(rotate);
-        }
+        getmatrix();
 
-        if(scale != null){
-            setScale(scale);
+
+
+
+      /*  if (nodes.size() > 0) {
+            nodes.forEach(effekseerNode -> {
+                effekseerNode.setPlay(play);
+            });
         }
+            */
+
 
     }
 
+    public int getNodeSize() {
+        return effekseerEffectCore.NodeCount();
+    }
+
+    /**
+     * @param axis  The vector axis to rotate around.
+     * @param angle
+     */
+    public void rotate(Vector3 axis, float angle) {
+
+        transform.rotate(axis, angle);
+
+    }
+
+    public void translate(float x, float y, float z) {
+        transform.translate(x, y, z);
+    }
+
+    public EffekseerNode getNode() {
+        return effekseerEffectCore.getNode();
+    }
 
     public void load(String path, boolean internalStorage) throws Exception {
 
@@ -120,7 +186,9 @@ public class ParticleEffekseer {
 
 
         try {
-            if (!effekseerEffectCore.Load(byt, byt.length, magnification, manager.effekseerManagerCore)) {
+
+
+            if (!effekseerEffectCore.load(manager.effekseerManagerCore, byt, byt.length, magnification)) {
                 System.out.print("Failed to load.");
 
             }
@@ -211,22 +279,57 @@ public class ParticleEffekseer {
         // TODO sound
 
 
+
+        /*
+
+        nodeSize = effekseerEffectCore.getNodesSize();
+        for (int i = 0; i < nodeSize; i++) {
+            EffekseerNode node = new EffekseerNode(effekseerEffectCore.swigCPtr, i, true);
+            node.setMagnification(magnification);
+            node.setManager(manager);
+            nodes.add(node);
+
+
+        }
+
+
+         */
+
     }
 
-    public Vector3 getPosition() {
-        return position;
+
+    protected void update(float delta) {
+
+
+
+     /*   if (nodes.size() > 0) {
+            nodes.forEach(effekseerNode -> {
+                effekseerNode.update(delta);
+            });
+        }    */
     }
 
-    public Vector3 getRotate() {
-        return rotate;
+
+    public void setPosition2D(Vector2 position) {
+
+      /*  vector2.set(position);
+        transform.getTranslation(vector2);
+        transform.translate((-(manager.camera.viewportWidth / 2) + vector2.x), (-(manager.camera.viewportHeight / 2) + vector2.y), 0.0f);
+
+*/
+
+
+        manager.effekseerManagerCore.SetEffectPosition(handle, ((-(manager.camera.viewportWidth / 2)) + position.x), ((-(manager.camera.viewportHeight / 2)) + position.y), 0.0f);
+
+
     }
 
-    public void  pause(){
-        manager.effekseerManagerCore.pause(handle);
+    public void pause() {
+        manager.effekseerManagerCore.SetPause(handle, true);
     }
 
-    public void  resume(){
-        manager.effekseerManagerCore.resume(handle);
+    public void resume() {
+        manager.effekseerManagerCore.SetPause(handle, false);
     }
 
     protected OnAnimationComplete getOnAnimationComplete() {
@@ -235,5 +338,19 @@ public class ParticleEffekseer {
 
     public void setOnAnimationComplete(OnAnimationComplete onAnimationComplete) {
         this.onAnimationComplete = onAnimationComplete;
+
     }
+
+
+
+
+  /*  public interface EffekseerXYZListener {
+        void fixed(VectorFixed Class);
+
+        void pva(VectorPVA Class);
+
+        void easing(EasingVector3d Class);
+
+        void single(VectorPVASingle Class);
+    }     */
 }

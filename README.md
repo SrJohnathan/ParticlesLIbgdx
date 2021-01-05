@@ -13,6 +13,11 @@ https://effekseer.github.io/en/
 
 https://libgdx.badlogicgames.com/
 
+### Supported platforms
+
+Android 
+
+Windows
 
 ### Native dependencies
 
@@ -42,7 +47,7 @@ Windows Folder
 
 
 ### Core dependencies
-```implementation 'br.com.johnathan.gdx.effekseer:api:0.0.3'```
+```implementation 'br.com.johnathan.gdx.effekseer:api:0.0.6'```
 
 sourceCompatibility = 1.8
 ### Starting
@@ -81,6 +86,8 @@ EffekseerManager.InitializeEffekseer();
 @Override
         public void render() {
 
+...
+
         manager.draw(Gdx.graphics.getDeltaTime());
 } 
 ```
@@ -100,11 +107,36 @@ manager.dispose();
   EffekseerManager  manager = new EffekseerManager(orthographicCamera);
 ```
 
-### Supported platforms
+### animation functions
 
-Android 
+```java
+  effekseer = new ParticleEffekseer(manager);
 
-Windows
+
+
+try {
+            effekseer.load("data/ring.efk",true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+effekseer.play();
+
+// called after the play function
+
+effekseer.setPosition2D(); //2d animation;
+effekseer.getScale(); 
+effekseer.setScale();
+effekseer.getNodeSize();
+effekseer.rotate();
+effekseer.translate();
+effekseer.getNode();
+effekseer.pause();
+effekseer.resume();
+effekseer.setOnAnimationComplete();
+effekseer.transform    //3d animation;
+```
+
 
 ### Contributors:
 * Antonio Johnathan       https://github.com/SrJohnathan

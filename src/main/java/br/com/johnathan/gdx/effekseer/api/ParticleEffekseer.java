@@ -16,7 +16,7 @@ import java.util.Objects;
 
 public class ParticleEffekseer {
 
-    private final Matrix4 transform = new Matrix4();
+    public final Matrix4 transform = new Matrix4();
 
     private final EffekseerEffectCore effekseerEffectCore;
     private int nodeSize = 0;
@@ -90,8 +90,6 @@ public class ParticleEffekseer {
 
 
         if (getmatrix) {
-
-
             transform.extract4x3Matrix(mtx);
             manager.effekseerManagerCore.SetMatrix(handle, mtx);
         }
@@ -154,7 +152,6 @@ public class ParticleEffekseer {
      * @param angle
      */
     public void rotate(Vector3 axis, float angle) {
-
         transform.rotate(axis, angle);
 
     }
@@ -317,11 +314,7 @@ public class ParticleEffekseer {
         transform.translate((-(manager.camera.viewportWidth / 2) + vector2.x), (-(manager.camera.viewportHeight / 2) + vector2.y), 0.0f);
 
 */
-
-
         manager.effekseerManagerCore.SetEffectPosition(handle, ((-(manager.camera.viewportWidth / 2)) + position.x), ((-(manager.camera.viewportHeight / 2)) + position.y), 0.0f);
-
-
     }
 
     public void pause() {

@@ -37,7 +37,7 @@ apply plugin: 'maven'
 apply plugin: 'io.codearte.nexus-staging'
 apply plugin: "maven-publish"
 
-def vers = '0.0.5'
+def vers = '0.0.6'
 
 group 'br.com.johnathan.gdx.effekseer.api'
 version = vers

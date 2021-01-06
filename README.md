@@ -32,15 +32,15 @@ Android Folder
 
 libs 
     arm64-v8a
-        libsrc.so
+        libgdxeffek.so
     armeabi-v7a
-        libsrc.so
+        libgdxeffek.so
     x86
-        libsrc.so
+        libgdxeffek.so
 
 Windows Folder
         assets
-            src.dll
+            gdxeffek.dll
 
 ```
 
